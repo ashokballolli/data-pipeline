@@ -9,3 +9,10 @@ requests==2.21.0
 arrow==0.13.1
 openpyxl==2.6.2
 schedule==0.6.0
+xlrd==1.2.0
+XlsxWriter==1.1.16
+docutils==0.14
+get==2019.3.22
+matplotlib==3.0.3
+python-dateutil==2.6.1
+python-telegram-bot==11.1.0
