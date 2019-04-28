@@ -1,0 +1,11 @@
+ACC: no buy spread
+
+M&M needs html escape
+Add the below lines and it should handle all html special characters
+
+from urllib.parse import quote
+nse.get_quote(quote(i,safe=''))
+
+
+return str, x;
+str, x = fun()
