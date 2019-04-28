@@ -1,1 +1,9 @@
 APScheduler==3.0.0
+dateutils==0.6.6
+httptools==0.0.13
+nsepy==0.7
+nsetools==1.0.10
+numpy==1.16.2
+pandas==0.24.2
+requests==2.21.0
+telegram==0.0.4
