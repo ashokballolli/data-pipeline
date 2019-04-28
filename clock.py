@@ -10,7 +10,7 @@ from utils.TelegramInteraction import sendMessage
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=1500000000000000000)
+@sched.scheduled_job('interval', minutes=15000)
 def timed_job():
     print('This job is run every 15 minutes.')
     # start_date = date(2018, 6, 20)
