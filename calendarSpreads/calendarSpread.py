@@ -3,7 +3,7 @@ import pandas as pd
 import datetime
 
 def result(symbol):
-    file = '../data/data_calendarSpreads/' + symbol + '.xlsx'
+    file = '/app/data/data_calendarSpreads/' + symbol + '.xlsx'
 
     stock_data_df = pd.read_excel(file, sheet_name=symbol).tail(201)
     stock_data_df['Diff'] = stock_data_df['Next Close'] - stock_data_df['Curr Close']
@@ -74,7 +74,7 @@ def result(symbol):
     return False, "Nothing"
 
 def analyse_existing_positions(symbol):
-    file = '../data/data_calendarSpreads/' + symbol + '.xlsx'
+    file = '/app/data/data_calendarSpreads/' + symbol + '.xlsx'
 
     stock_data_df = pd.read_excel(file, sheet_name=symbol).tail(201)
     stock_data_df['Diff'] = stock_data_df['Next Close'] - stock_data_df['Curr Close']

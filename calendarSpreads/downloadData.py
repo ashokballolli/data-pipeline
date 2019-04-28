@@ -128,7 +128,7 @@ def get_futures_data_continous(symbol, start_date, end_date):
 
     # if you have already run this program before,change the filename below to
     # avoid overwriting
-    file = "../data/data_calendarSpreads/" + symbol + ".xlsx"
+    file = "/app/data/data_calendarSpreads/" + symbol + ".xlsx"
     exists = os.path.isfile(file)
 
     if exists:
@@ -214,7 +214,7 @@ def get_futures_data_LTP(symbol):
         return 0.0, 0.0;
 
 def writeLTPFutureToDataFile(symbol):
-    file = "../data/data_calendarSpreads/" + symbol + ".xlsx"
+    file = "/app/data/data_calendarSpreads/" + symbol + ".xlsx"
     stock_data_df = pd.read_excel(file, sheet_name=symbol)
     last_record = stock_data_df['Date'].tail(1)
     last_record_date_time = last_record.iloc[0]
