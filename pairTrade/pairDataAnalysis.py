@@ -109,13 +109,13 @@ class PairDataAnalysis:
         if(float(str(round(final_result.params[x], 4))) < 0):
             telegram_message = telegram_message + "Beta is NEGATIVE, you can't trade this, atleast not always\n"
 
-        if(std_error_decision_maker <= -1.5):
+        if(std_error_decision_maker <= -2.5):
             flag = True
             telegram_message = telegram_message + "Long position with SL: -3.0, Target: -1\n"
             telegram_message = telegram_message + "*Buy Y-Stock : "+ y +" and Sell X-Stock : "+ x + '*\n'
             telegram_message = telegram_message + "1 "+x+" == "+str(beta)+" x "+y + '\n'
 
-        if(std_error_decision_maker >= 1.5):
+        if(std_error_decision_maker >= 2.5):
             flag = True
             telegram_message = telegram_message + "Short position with SL: +3.0, Target: +1\n"
             telegram_message = telegram_message + "*Sell Y-Stock: " + y + " and Buy X-Stock : " + x + '*\n'

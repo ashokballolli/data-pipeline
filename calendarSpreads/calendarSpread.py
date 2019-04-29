@@ -28,8 +28,8 @@ def result(symbol):
     print("New lower range = "+str(new_lower_range))
 
     # IMP: change this to what range you want to consider
-    upper_range_considered = upper_range
-    lower_range_considered = lower_range
+    upper_range_considered = new_upper_range
+    lower_range_considered = new_lower_range
     # upper_range_considered = new_upper_range
     # lower_range_considered = new_lower_range
     # sell_spread

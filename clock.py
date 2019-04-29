@@ -11,7 +11,7 @@ import os
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=15)
+@sched.scheduled_job('interval', minutes=30)
 def timed_job():
     print('This job is run every 15 minutes.')
     start_date = date(2018, 6, 20)
@@ -38,7 +38,7 @@ def timed_job():
                'TATAGLOBAL', 'TATAMOTORS', 'TATAMTRDVR', 'TATAPOWER', 'TATASTEEL', 'TCS', 'TECHM', 'TITAN', 'TORNTPHARM',
                'TORNTPOWER', 'TV18BRDCST', 'TVSMOTOR', 'UBL', 'UJJIVAN', 'ULTRACEMCO', 'UNIONBANK', 'UPL', 'VEDL', 'VGUARD',
                'VOLTAS', 'WIPRO', 'WOCKPHARMA', 'YESBANK']
-    symbols = ['ACC']
+    # symbols = ['ACC']
 
     #  Start monitoring for the following stocks
     # JINDALSTEL  GMRINFRA  POWERGRID   VEDL
@@ -72,9 +72,9 @@ def timed_job():
 # def scheduled_job():
 #     print('This job is run every weekday at 5pm.')
 
-@sched.scheduled_job('interval', minutes=15)
+@sched.scheduled_job('interval', minutes=30)
 def timed_job():
-    start_date = date(2018, 6, 16)
+    start_date = date(2018, 6, 20)
     # end_date = date(2019,4,21) # A day lesser than today -- previous day -- today's data will be updated by the LTP function
     current_date_time = datetime.datetime.now()
     end_date = current_date_time.date()
