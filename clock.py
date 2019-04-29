@@ -13,10 +13,11 @@ sched = BlockingScheduler()
 
 @sched.scheduled_job('interval', minutes=30)
 def timed_job():
-    print('This job is run every 15 minutes.')
     start_date = date(2018, 6, 20)
     # end_date = date(2019, 4, 21)
     end_date = datetime.datetime.now().date()
+    print('This CALENDAR SPREAD job is run every 30 minutes. == '+str(end_date))
+
     symbols = ['ACC', 'ADANIENT', 'ADANIPORTS', 'ADANIPOWER', 'AJANTPHARM', 'ALBK', 'AMARAJABAT', 'AMBUJACEM', 'APOLLOHOSP',
                'APOLLOTYRE', 'ARVIND', 'ASHOKLEY', 'ASIANPAINT', 'AUROPHARMA', 'AXISBANK', 'BAJAJ-AUTO', 'BAJAJFINSV',
                'BAJFINANCE', 'BALKRISIND', 'BANKBARODA', 'BANKINDIA', 'BATAINDIA', 'BEL', 'BEML', 'BERGEPAINT', 'BHARATFIN',
@@ -73,11 +74,12 @@ def timed_job():
 #     print('This job is run every weekday at 5pm.')
 
 @sched.scheduled_job('interval', minutes=30)
-def timed_job():
+def timed_job1():
     start_date = date(2018, 6, 20)
     # end_date = date(2019,4,21) # A day lesser than today -- previous day -- today's data will be updated by the LTP function
     current_date_time = datetime.datetime.now()
     end_date = current_date_time.date()
+    print('This PAIR TRADE job is run every 30 minutes. == '+str(current_date_time))
 
     is_stock01_index = False
     is_stock02_index = False
