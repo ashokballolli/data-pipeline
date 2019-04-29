@@ -128,9 +128,12 @@ def get_futures_data_continous(symbol, start_date, end_date):
 
     # if you have already run this program before,change the filename below to
     # avoid overwriting
-    file = "/app/data/data_calendarSpreads/" + symbol + ".xlsx"
-    exists = os.path.isfile(file)
 
+    path_local = "../data/data_calendarSpreads/" + symbol + ".xlsx"
+    path_heroku = "/app/data/data_calendarSpreads/" + symbol + ".xlsx"
+
+    file = path_local if os.path.isfile(path_local) else path_heroku
+    exists = os.path.isfile(file)
     if exists:
         writerA = pd.ExcelWriter(file, engine='openpyxl')
         stock_data_df = pd.read_excel(file, sheet_name=symbol)
@@ -193,14 +196,14 @@ def get_futures_data_LTP(symbol):
     next_exp_quote = get_quote(symbol=symbol, instrument='FUTSTK', expiry=next_expiry_date, strike=450.00)
     print(current_exp_quote)
     print(next_exp_quote)
-    current_exp_quote_lastPrice = current_exp_quote['lastPrice']
-    next_exp_quote_lastPrice = next_exp_quote['lastPrice']
+    # current_exp_quote_lastPrice = current_exp_quote['lastPrice']
+    # next_exp_quote_lastPrice = next_exp_quote['lastPrice']
 
     # make current_expiry_ltp = current_month_buyPrice1 from spread
     # make next_expiry_ltp = next_month_sellPrice1 from spread
     # becasue this will be only the sell spread: Buying current month, selling next month
-    # current_exp_quote_lastPrice = current_exp_quote['sellPrice1']
-    # next_exp_quote_lastPrice = next_exp_quote['buyPrice1']
+    current_exp_quote_lastPrice = current_exp_quote['sellPrice1']
+    next_exp_quote_lastPrice = next_exp_quote['buyPrice1']
     print(current_exp_quote_lastPrice)
     print(next_exp_quote_lastPrice)
     if current_exp_quote_lastPrice == '-':
@@ -214,7 +217,13 @@ def get_futures_data_LTP(symbol):
         return 0.0, 0.0;
 
 def writeLTPFutureToDataFile(symbol):
-    file = "/app/data/data_calendarSpreads/" + symbol + ".xlsx"
+
+    path_local = "../data/data_calendarSpreads/" + symbol + ".xlsx"
+    path_heroku = "/app/data/data_calendarSpreads/" + symbol + ".xlsx"
+
+    file = path_local if os.path.isfile(path_local) else path_heroku
+
+
     stock_data_df = pd.read_excel(file, sheet_name=symbol)
     last_record = stock_data_df['Date'].tail(1)
     last_record_date_time = last_record.iloc[0]

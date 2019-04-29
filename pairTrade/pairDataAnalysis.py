@@ -18,6 +18,7 @@ from sklearn import linear_model
 
 from pairTrade.StationarityTests import StationarityTests
 from utils.File import write
+import os
 
 
 class PairDataAnalysis:
@@ -27,9 +28,20 @@ class PairDataAnalysis:
         self.isStationary = None
 
     def analyseMethod01(stock01, stock02):
+        print_message = ""
+        telegram_message = ""
+        flag = False
+
         stock01 = stock01.replace(" ", "")
         stock02 = stock02.replace(" ", "")
-        file = '../data/pairTradeData/' + stock01+ '_' + stock02 + '.csv'
+
+        path_local = '../data/pairTradeData/'
+        path_heroku = '/app/data/pairTradeData/'
+
+        file_01 = path_local if os.path.isdir(path_local) else path_heroku
+
+
+        file = file_01 + stock01+ '_' + stock02 + '.csv'
         PairDataAnalysis.replaceFirstLine(file)
         stock_data = pd.read_csv(file, low_memory=False)
 
@@ -92,19 +104,36 @@ class PairDataAnalysis:
              str(round(sTest.pValue, 4)), float(str(round(todays_residual, 4))), float(str(round(final_standard_error_of_residuals, 4))), std_error_decision_maker,
              sTest.isStationary])
 
+
         print(t)
         if(float(str(round(final_result.params[x], 4))) < 0):
-            print("Beta is NEGATIVE, you can't trade this, atleast not always")
+            telegram_message = telegram_message + "Beta is NEGATIVE, you can't trade this, atleast not always\n"
 
-        if(std_error_decision_maker <= -2.5):
-            print("Long position with SL: -3.0, Target: -1")
-            print("Buy "+ y +" and Sell "+ x)
-            print("1 "+x+" == "+str(beta)+" * "+y)
+        if(std_error_decision_maker <= -1.5):
+            flag = True
+            telegram_message = telegram_message + "Long position with SL: -3.0, Target: -1\n"
+            telegram_message = telegram_message + "*Buy Y-Stock : "+ y +" and Sell X-Stock : "+ x + '*\n'
+            telegram_message = telegram_message + "1 "+x+" == "+str(beta)+" x "+y + '\n'
 
-        if(std_error_decision_maker >= 2.5):
-            print("Short position with SL: +3.0, Target: +1")
-            print("Sell " + y + " and Buy " + x)
-            print("1 "+x+" == "+str(beta)+" * "+y)
+        if(std_error_decision_maker >= 1.5):
+            flag = True
+            telegram_message = telegram_message + "Short position with SL: +3.0, Target: +1\n"
+            telegram_message = telegram_message + "*Sell Y-Stock: " + y + " and Buy X-Stock : " + x + '*\n'
+            telegram_message = telegram_message + "1 "+x+" == "+str(beta)+" x "+y + '\n'
+
+        if flag == True:
+            telegram_message = telegram_message + "Y-Stock = " + y + '\n'
+            telegram_message = telegram_message + "X-Stock = " + x + '\n'
+            telegram_message = telegram_message + "Intercept = " + str(float(str(round(final_result.params['Intercept'], 4)))) + '\n'
+            telegram_message = telegram_message + "Slope/Beta = " + str(beta) + '\n'
+            telegram_message = telegram_message + "p-Value = *" + str(round(sTest.pValue, 4)) + '*\n'
+            telegram_message = telegram_message + "Today's residual = " + str(float(str(round(todays_residual, 4)))) + '\n'
+            telegram_message = telegram_message + "Sigma/Std Err of Residuals = " + str(float(str(round(final_standard_error_of_residuals, 4)))) + '\n'
+            telegram_message = telegram_message + "Std Err-DecisionMaker = *" + str(std_error_decision_maker) + '*\n'
+            telegram_message = telegram_message + "Is the time series stationary? = *" + str(sTest.isStationary) + '*\n'
+
+        print(telegram_message)
+        return flag, telegram_message
 
     def analyseMethod02(stock01, stock02):
         stock01 = stock01.replace(" ", "")
@@ -208,7 +237,11 @@ class PairDataAnalysis:
 
     def download_stock_data_for_analysis(stock01, stock02, start_date, end_date, is_stock01_index, is_stock02_index):
         nse = Nse()
-        file = '../data/pairTradeData/' + stock01.replace(" ", "")+ '_' + stock02.replace(" ", "") + '.csv'
+        path_local = '../data/pairTradeData/'
+        path_heroku = '/app/data/pairTradeData/'
+        file_01 = path_local if os.path.isdir(path_local) else path_heroku
+
+        file = file_01 + stock01.replace(" ", "")+ '_' + stock02.replace(" ", "") + '.csv'
 
         history_stock01 = get_history(symbol=stock01, start=start_date, end=end_date, index=is_stock01_index)
         history_stock02 = get_history(symbol=stock02, start=start_date, end=end_date, index=is_stock02_index)

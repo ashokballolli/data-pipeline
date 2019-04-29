@@ -1,9 +1,13 @@
 import numpy as np
 import pandas as pd
 import datetime
+import os
 
 def result(symbol):
-    file = '/app/data/data_calendarSpreads/' + symbol + '.xlsx'
+    path_local = '../data/data_calendarSpreads/' + symbol + '.xlsx'
+    path_heroku = '/app/data/data_calendarSpreads/' + symbol + '.xlsx'
+
+    file = path_local if os.path.isfile(path_local) else path_heroku
 
     stock_data_df = pd.read_excel(file, sheet_name=symbol).tail(201)
     stock_data_df['Diff'] = stock_data_df['Next Close'] - stock_data_df['Curr Close']
@@ -74,7 +78,12 @@ def result(symbol):
     return False, "Nothing"
 
 def analyse_existing_positions(symbol):
-    file = '/app/data/data_calendarSpreads/' + symbol + '.xlsx'
+
+    path_local = '../data/data_calendarSpreads/' + symbol + '.xlsx'
+    path_heroku = '/app/data/data_calendarSpreads/' + symbol + '.xlsx'
+
+    file = path_local if os.path.isfile(path_local) else path_heroku
+
 
     stock_data_df = pd.read_excel(file, sheet_name=symbol).tail(201)
     stock_data_df['Diff'] = stock_data_df['Next Close'] - stock_data_df['Curr Close']
