@@ -6,5 +6,3 @@ def write(filename, content):
     # Close the file
     myfile.close()
 
-
-write('../data/newfile.txt', "222")
