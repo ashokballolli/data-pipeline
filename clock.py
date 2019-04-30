@@ -11,7 +11,7 @@ import os
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=30)
+@sched.scheduled_job('interval', minutes=10)
 def timed_job():
     start_date = date(2018, 6, 20)
     # end_date = date(2019, 4, 21)
