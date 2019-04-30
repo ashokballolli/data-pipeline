@@ -144,12 +144,24 @@ def get_futures_data_continous(symbol, start_date, end_date):
         current_year = current_date.year
         current_month = current_date.month
 
+        print(last_record_date, current_date- timedelta(days=1))
         if last_record_date < current_date - timedelta(days=1):
+            # if current_date > current_expiry_date:
+            # current_expiry_date = get_expiry_date(year=current_year, month=current_month+1)
             expiry = get_expiry_date(year=current_year, month=current_month)
-            new_data = fetch_data(symbol, expiry, last_record_date + timedelta(days=1))
-            # stock_data_df.append(fetch_data(symbol, expiry, last_record_date + timedelta(days=1)))
-            if (len(new_data.index) > 0):
-                append_df_to_excel(file, new_data, sheet_name=symbol)
+            if expiry < last_record_date:
+                expiry = get_expiry_date(year=current_year, month=current_month + 1)
+                print(symbol, expiry, last_record_date + timedelta(days=1))
+                new_data = fetch_data(symbol, expiry, last_record_date + timedelta(days=1))
+                # stock_data_df.append(fetch_data(symbol, expiry, last_record_date + timedelta(days=1)))
+                if (len(new_data.index) > 0):
+                    append_df_to_excel(file, new_data, sheet_name=symbol)
+            else:
+                print(symbol, expiry, last_record_date + timedelta(days=1))
+                new_data = fetch_data(symbol, expiry, last_record_date + timedelta(days=1))
+                # stock_data_df.append(fetch_data(symbol, expiry, last_record_date + timedelta(days=1)))
+                if (len(new_data.index) > 0):
+                    append_df_to_excel(file, new_data, sheet_name=symbol)
 
 
     else:

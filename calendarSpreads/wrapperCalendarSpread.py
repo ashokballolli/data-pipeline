@@ -36,7 +36,7 @@ symbols = ['ACC', 'ADANIENT', 'ADANIPORTS', 'ADANIPOWER', 'AJANTPHARM', 'ALBK', 
            'TORNTPOWER', 'TV18BRDCST', 'TVSMOTOR', 'UBL', 'UJJIVAN', 'ULTRACEMCO', 'UNIONBANK', 'UPL', 'VEDL', 'VGUARD',
            'VOLTAS', 'WIPRO', 'WOCKPHARMA', 'YESBANK']
 
-symbols = ['ACC']
+# symbols = ['ACC']
 
 tradable_symbols = []
 tradable_symbols_message = []
