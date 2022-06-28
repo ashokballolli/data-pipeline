@@ -6,7 +6,7 @@ nsetools==1.0.10
 numpy==1.16.2
 pandas==0.24.2
 requests==2.21.0
-arrow==0.13.1
+arrow==0.15.1
 openpyxl==2.6.2
 schedule==0.6.0
 xlrd==1.2.0
